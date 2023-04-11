@@ -47,6 +47,10 @@ PrefabInstance:
       propertyPath: ball
       value: 
       objectReference: {fileID: 4875089044676573005}
+    - target: {fileID: 3837885778328740601, guid: 3e8672d71931e4ca38aaa464eab2f681, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7219404456109968803, guid: 3e8672d71931e4ca38aaa464eab2f681, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -120,16 +124,3 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3059911353096737631, guid: 3e8672d71931e4ca38aaa464eab2f681, type: 3}
   m_PrefabInstance: {fileID: 7624935575985611794}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5370245666415310936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4875089044676573005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c1ca9ac312e4bedb999620d4299edf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ball: {fileID: 6089847519091280916}

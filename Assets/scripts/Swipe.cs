@@ -59,8 +59,8 @@ public class Swipe : MonoBehaviour
 			//rb.AddForce (- direction.x * throwForceInXandY, - direction.y * throwForceInXandY, throwForceInZ / timeInterval);
 			rb.AddForce(force);
 			
-			// Destroy ball in 4 seconds
-			Destroy (gameObject, 3f);
+			// Destroy ball in 7 seconds
+			Destroy (gameObject, 7f);
 			
 			//Destroying the script
 			Destroy(this);

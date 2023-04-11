@@ -16,6 +16,11 @@ public class CollisonDetection : MonoBehaviour
             //pontot kap a jatekos mondjuk
             GameObject.Destroy(ball);
         }
+        if (collision.collider.tag.Equals("ball"))
+        {
+            //pontot kap a jatekos mondjuk
+            Debug.Log("asd");
+        }
 
     }
     
