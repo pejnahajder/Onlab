@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -13,6 +8,7 @@ using UnityEngine.XR.ARSubsystems;
 public class tapToPlaceBasket : MonoBehaviour
 {
     public GameObject objectToSpawn; 
+    private Transform worldCoordinateSystem;
     
     public GameObject preGamePanel;
     public GameObject inGamePanel;
@@ -23,20 +19,32 @@ public class tapToPlaceBasket : MonoBehaviour
     private GameObject camera;
     private bool onTouchHold = false;
 
+    private NewPlayerBehaviour player;
+
     [SerializeField] 
     private Camera arCamera;
     
     
     private static List<ARRaycastHit> hits = new List<ARRaycastHit>();
-    
-    private void Awake()
+
+    private void Start()
     {
+        worldCoordinateSystem = GameObject.Find("WorldCoordinateSystem").transform;
+    }
+
+    public void StartScript()
+    {
+        
         preGamePanel.SetActive(false);
         inGamePanel.SetActive(false);
         _arRaycastManager = GetComponent<ARRaycastManager>();
         camera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
+    public void setPlayer(NewPlayerBehaviour pl)
+    {
+        player = pl;
+    }
     bool TryToGetPosition(out Vector2 touchPosition)
     {
         if (Input.touchCount > 0)
@@ -76,27 +84,29 @@ public class tapToPlaceBasket : MonoBehaviour
         }
         
         
-        if (_arRaycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon))
-              {
-                  var hitPose = hits[0].pose;
-                  var newPosition = new Vector3(hitPose.position.x, hitPose.position.y+0.3f, hitPose.position.z);
-                  Vector3 rot = camera.transform.rotation.eulerAngles;
-                  rot = new Vector3(0,rot.y+180,0);
-                  var rotation = Quaternion.Euler(rot);
-                  if (basket == null)
-                  {
-                      basket = Instantiate(objectToSpawn, newPosition, rotation);
-                      preGamePanel.SetActive(true);
-                  }
-                  else
-                  {
-                      if (onTouchHold)
-                      {
-                          basket.transform.position = newPosition;
-                          basket.transform.rotation = rotation;
-                      }
-                  }
-              }
+        if (_arRaycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon)) 
+        { 
+            var hitPose = hits[0].pose; 
+            var newPosition = new Vector3(hitPose.position.x, hitPose.position.y+0.3f, hitPose.position.z); 
+            var rot = camera.transform.rotation.eulerAngles; 
+            rot = new Vector3(0,rot.y+180,0); 
+            var rotation = Quaternion.Euler(rot); 
+            if (basket == null) 
+            {
+              basket = Instantiate(objectToSpawn, newPosition, rotation);
+              basket.transform.parent = worldCoordinateSystem;
+              player.setBasket(basket);
+              preGamePanel.SetActive(true); 
+            }
+            else 
+            { 
+                if (onTouchHold) 
+                {
+                  basket.transform.position = newPosition;
+                  basket.transform.rotation = rotation;
+                } 
+            }
+        }
     }
 
     public void DestroyScript()

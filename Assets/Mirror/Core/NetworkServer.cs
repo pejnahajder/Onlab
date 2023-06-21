@@ -1810,5 +1810,7 @@ namespace Mirror
         // Deprecated 2022-12-12
         [Obsolete("NetworkServer.ActivateHostScene was moved to HostMode.ActivateHostScene")]
         public static void ActivateHostScene() => HostMode.ActivateHostScene();
+
+       
     }
 }
